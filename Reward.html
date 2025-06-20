@@ -30,10 +30,17 @@
     }
     #ad-container {
       margin: 20px auto;
-      max-width: 325px;
+      max-width: 350px; /* ठुलो बॉक्स */
       background-color: #ddd;
       border-radius: 8px;
       padding: 10px;
+      box-sizing: border-box;
+    }
+    /* TikTok embed adjustment */
+    blockquote.tiktok-embed {
+      max-width: 100% !important;
+      min-width: auto !important;
+      margin: 0 auto !important;
     }
   </style>
 </head>
@@ -44,7 +51,7 @@
     <blockquote class="tiktok-embed"
       cite="https://www.tiktok.com/@_sumaney/video/7513577742600867080"
       data-video-id="7513577742600867080"
-      style="max-width: 325px; min-width: 325px;">
+      style="max-width: 100%; margin: 0 auto;">
       <section>
         <a target="_blank" title="@_sumaney"
           href="https://www.tiktok.com/@_sumaney">@_sumaney</a>
@@ -55,11 +62,11 @@
 
   <script async src="https://www.tiktok.com/embed.js"></script>
 
-  <div id="timer">23 seconds</div>
+  <div id="timer">15 seconds remaining...</div>
   <button id="reward-btn" disabled>Get Reward</button>
 
   <script>
-    let timeLeft = 23;
+    let timeLeft = 15;
     const timerEl = document.getElementById("timer");
     const rewardBtn = document.getElementById("reward-btn");
 
