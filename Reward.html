@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Watch Ad & Get Reward</title>
+  <title>Watch this vide</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -43,32 +43,31 @@
   </style>
 </head>
 <body>
-  <h2>Watch this ad to get reward</h2>
+  <h2>Watch this video</h2>
   <div id="ad-container">
   <iframe width="100%" height="180" 
-          src="https://youtu.be/x0v7or1O-gY?si=NDpK07ziSLKxXMgl"
+          src="https://youtu.be/PyKIUoPu_bM"
           frameborder="0"
           allowfullscreen></iframe>
 </div>
-  <div id="timer">15 seconds remaining...</div>
-  <button id="reward-btn" disabled>Get Reward</button>
+  <div id="timer">117 seconds</div>
   <script>
-    let timeLeft = 15;
+    let timeLeft = 117;
     const timerEl = document.getElementById("timer");
     const rewardBtn = document.getElementById("reward-btn");
     const countdown = setInterval(() => {
       timeLeft--;
       if (timeLeft > 0) {
-        timerEl.textContent = timeLeft + " seconds remaining...";
+        timerEl.textContent = timeLeft + " seconds";
       } else {
         clearInterval(countdown);
-        timerEl.textContent = "You can now claim your reward!";
+        timerEl.textContent = "Thanks !";
         rewardBtn.disabled = false;
         rewardBtn.classList.add("enabled");
       }
     }, 1000);
     rewardBtn.addEventListener("click", () => {
-      alert("🎉 Congratulations! Reward granted.");
+      alert("🎉 Thanks for watch this video ");
     });
   </script>
 </body>
