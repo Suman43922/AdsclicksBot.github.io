@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Watch Ad & Get Reward</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+    #reward-btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 18px;
+      background-color: grey;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: not-allowed;
+    }
+    #reward-btn.enabled {
+      background-color: #28a745;
+      cursor: pointer;
+    }
+    #timer {
+      font-size: 24px;
+      margin-top: 15px;
+    }
+    #ad-container {
+      margin: 20px auto;
+      width: 320px;
+      height: 180px;
+      background-color: #ddd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: #555;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Watch this ad to get reward</h2>
+  <div id="ad-container">
+  <iframe width="100%" height="180" 
+          src="https://youtu.be/x0v7or1O-gY?si=NDpK07ziSLKxXMgl"
+          frameborder="0"
+          allowfullscreen></iframe>
+</div>
+  <div id="timer">15 seconds remaining...</div>
+  <button id="reward-btn" disabled>Get Reward</button>
+  <script>
+    let timeLeft = 15;
+    const timerEl = document.getElementById("timer");
+    const rewardBtn = document.getElementById("reward-btn");
+    const countdown = setInterval(() => {
+      timeLeft--;
+      if (timeLeft > 0) {
+        timerEl.textContent = timeLeft + " seconds remaining...";
+      } else {
+        clearInterval(countdown);
+        timerEl.textContent = "You can now claim your reward!";
+        rewardBtn.disabled = false;
+        rewardBtn.classList.add("enabled");
+      }
+    }, 1000);
+    rewardBtn.addEventListener("click", () => {
+      alert("🎉 Congratulations! Reward granted.");
+    });
+  </script>
+</body>
+</html>
