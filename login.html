@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Register / Login</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: #f4f4f4;
+      padding: 20px;
+    }
+    .container {
+      max-width: 400px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #ccc;
+    }
+    h2 { text-align: center; }
+    input, select {
+      width: 92%;
+      padding: 10px;
+      margin-top: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+    #countryCode {
+      width: 92px;
+      height: 37px;
+      font-size: 12px;
+      background-color: #eee;
+    }
+    #phone {
+      flex: 1;
+      padding: 8px;
+      font-size: 13px;
+    }
+    .phone-row { display: flex; gap: 10px; }
+    .checkbox {
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .checkbox input { width: auto; margin-right: 10px; }
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #007bff;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover { background: #0056b3; }
+    .or-separator {
+      text-align: center;
+      margin: 10px 0;
+      font-size: 12px;
+      font-weight: bold;
+      color: #555;
+      position: relative;
+    }
+    .or-separator::before,
+    .or-separator::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      width: 40%;
+      height: 1px;
+      background-color: #ccc;
+    }
+    .or-separator::before { left: 0; }
+    .or-separator::after { right: 0; }
+
+    #errorMsg {
+      color: red;
+      font-size: 10px;
+      text-align: center;
+      background-color: #ffe6e6;
+      border: 1px solid red;
+      border-radius: 5px;
+      padding: 5px 10px;
+      margin-bottom: 10px;
+      display: none;
+      user-select: none;
+      pointer-events: none;
+      max-width: 280px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    #helloPage {
+      text-align: center;
+    }
+    #helloPage button {
+      margin-top: 20px;
+      background-color: green;
+    }
+    #loginPage, #helloPage { display: none; }
+  </style>
+</head>
+<body>
+
+<div class="container" id="registerPage">
+  <h2>Register</h2>
+  <div id="errorMsg"></div>
+
+  <input type="text" id="fullname" placeholder="Full Name" required />
+  <input type="text" id="username" placeholder="Username" required />
+  <input type="email" id="email" placeholder="Email" required />
+
+  <div class="phone-row">
+    <select id="countryCode" disabled>
+      <option value="+977" selected>🇳🇵 +977</option>
+    </select>
+    <input type="tel" id="phone" placeholder="Phone Number" required />
+  </div>
+
+  <input type="password" id="password" placeholder="Password" required />
+  <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
+
+  <div class="checkbox">
+    <input type="checkbox" id="policy" />
+    <label for="policy">I agree to the Terms of Use and Privacy Policy</label>
+  </div>
+
+  <button onclick="register()">Register</button>
+  <div class="or-separator">OR</div>
+<p style="text-align:center; font-size:14px; margin-top:15px;">
+  I have an account&nbsp;
+  <span onclick="showLogin()" style="font-size:14px; color:#007bff; cursor:pointer; text-decoration:underline;">
+    Login now
+  </span>
+</p>
+</div>
+
+<div class="container" id="loginPage">
+  <h2>Login</h2>
+  <input type="email" id="loginEmail" placeholder="Email" />
+  <input type="password" id="loginPassword" placeholder="Password" />
+  <button onclick="login()">Log In</button>
+</div>
+
+<div class="container" id="helloPage">
+  <h2>Welcome</h2>
+  <p>You are successfully logged in.</p>
+  <button onclick="goToDashboard()">Go to Dashboard</button>
+</div>
+
+<script>
+  let allUsers = JSON.parse(localStorage.getItem("allUsers") || "[]");
+
+  function showError(msg) {
+    const errorDiv = document.getElementById("errorMsg");
+    errorDiv.innerText = msg;
+    errorDiv.style.display = "block";
+  }
+
+  function register() {
+    const name = document.getElementById("fullname").value.trim();
+    const user = document.getElementById("username").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const pass = document.getElementById("password").value;
+    const cpass = document.getElementById("confirmPassword").value;
+    const policy = document.getElementById("policy").checked;
+
+    const errorDiv = document.getElementById("errorMsg");
+    errorDiv.style.display = "none";
+
+    if (!name || !user || !email || !phone || !pass || !cpass) {
+      showError("All fields are required!");
+      return;
+    }
+
+    if (!name.includes(" ")) {
+      showError("Full name must contain at least one space.");
+      return;
+    }
+
+    if (user.length <= 5) {
+      showError("Username must be more than 5 characters.");
+      return;
+    }
+
+    if (!email.endsWith("@gmail.com")) {
+      showError("Email must end with @gmail.com.");
+      return;
+    }
+
+    if (!/^\d{10}$/.test(phone)) {
+      showError("Phone number must be exactly 10 digits.");
+      return;
+    }
+
+    const phoneExists = allUsers.some(u => u.phone === "+977" + phone);
+    if (phoneExists) {
+      showError("Phone number already registered.");
+      return;
+    }
+
+    const usernameExists = allUsers.some(u => u.username === user);
+    if (usernameExists) {
+      showError("Username already exists.");
+      return;
+    }
+
+    const emailExists = allUsers.some(u => u.email === email);
+    if (emailExists) {
+      showError("Email already registered.");
+      return;
+    }
+
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&+=!]).{6,}$/;
+    if (!passwordRegex.test(pass)) {
+      showError("Password must have 1 uppercase, 1 lowercase, 1 number, and 1 special character.");
+      return;
+    }
+
+    if (pass !== cpass) {
+      showError("Passwords do not match.");
+      return;
+    }
+
+    if (!policy) {
+      showError("You must agree to the policy.");
+      return;
+    }
+
+    const newUser = {
+      name,
+      username: user,
+      email,
+      phone: "+977" + phone,
+      password: pass
+    };
+
+    allUsers.push(newUser);
+    localStorage.setItem("allUsers", JSON.stringify(allUsers));
+    alert("✅ Registered successfully!");
+
+    document.getElementById("registerPage").style.display = "none";
+    document.getElementById("loginPage").style.display = "block";
+  }
+
+  function login() {
+    const email = document.getElementById("loginEmail").value.trim();
+    const pass = document.getElementById("loginPassword").value;
+    const matchUser = allUsers.find(u => u.email === email && u.password === pass);
+
+    if (matchUser) {
+      document.getElementById("loginPage").style.display = "none";
+      document.getElementById("helloPage").style.display = "block";
+    } else {
+      alert("Incorrect email or password.");
+    }
+  }
+
+  function showLogin() {
+    document.getElementById("registerPage").style.display = "none";
+    document.getElementById("loginPage").style.display = "block";
+  }
+
+  function goToDashboard() {
+    alert("🚀 Redirecting to dashboard...");
+    // window.location.href = "dashboard.html"; // use this when you have dashboard.html
+  }
+</script>
+</body>
+</html>
