@@ -29,38 +29,42 @@
       margin-top: 15px;
     }
     #ad-container {
-      margin: 20px auto;
-      max-width: 350px; /* ठुलो बॉक्स */
-      background-color: #ddd;
-      border-radius: 8px;
-      padding: 10px;
-      box-sizing: border-box;
-    }
-    /* TikTok embed adjustment */
-    blockquote.tiktok-embed {
-      margin: 20px auto;
-      max-width: 350px;
-      padding: 10px;
-      box-sizing: border-box;
-      margin: 0 auto;
-    }
+  margin: 20px auto;
+  max-width: 350px;
+  background-color: #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  box-sizing: border-box;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+blockquote.tiktok-embed {
+  max-width: 100% !important;
+  min-width: auto !important;
+  margin: 0 auto !important;
+  display: block !important;
+}
   </style>
 </head>
 <body>
   <h2>Watch this TikTok to get reward</h2>
 
   <div id="ad-container">
-    <blockquote class="tiktok-embed"
-      cite="https://www.tiktok.com/@_sumaney/video/7513577742600867080"
-      data-video-id="7513577742600867080"
-      style="max-width: 100%; margin: 0 auto;">
-      <section>
-        <a target="_blank" title="@_sumaney"
-          href="https://www.tiktok.com/@_sumaney">@_sumaney</a>
-        <p>Watch Nepali TikTok video</p>
-      </section>
-    </blockquote>
-  </div>
+  <blockquote class="tiktok-embed"
+    cite="https://www.tiktok.com/@_sumaney/video/7513577742600867080"
+    data-video-id="7513577742600867080"
+    style="max-width: 100%; margin: 0 auto;">
+    <section>
+      <a target="_blank" title="@_sumaney"
+        href="https://www.tiktok.com/@_sumaney">@_sumaney</a>
+      <p>Watch Nepali TikTok video</p>
+    </section>
+  </blockquote>
+</div>
 
   <script async src="https://www.tiktok.com/embed.js"></script>
 
