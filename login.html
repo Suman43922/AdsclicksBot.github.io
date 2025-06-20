@@ -18,7 +18,20 @@
       border-radius: 10px;
       box-shadow: 0 0 10px #ccc;
     }
-    h2 { text-align: center; }
+    .main-title {
+      text-align: center;
+      color: #007b0f;
+      font-size: 30px;
+      font-weight: bold;
+      margin-bottom: 8px;
+      text-decoration: underline;
+    }
+    h2 {
+  text-align: center;
+  margin-top: 5px;
+  font-size: 17px;
+  font-weight: bold;
+}
     input, select {
       width: 92%;
       padding: 10px;
@@ -108,7 +121,8 @@
 <body>
 
 <div class="container" id="registerPage">
-  <h2>Register</h2>
+  <div class="main-title">AdsclicksBot</div>
+  <h2>Register Now</h2>
   <div id="errorMsg"></div>
 
   <input type="text" id="fullname" placeholder="Full Name" required />
@@ -132,23 +146,36 @@
 
   <button onclick="register()">Register</button>
   <div class="or-separator">OR</div>
-<p style="text-align:center; font-size:14px; margin-top:15px;">
-  I have an account&nbsp;
-  <span onclick="showLogin()" style="font-size:14px; color:#007bff; cursor:pointer; text-decoration:underline;">
-    Login now
-  </span>
-</p>
+  <p style="text-align:center; font-size:14px; margin-top:15px;">
+    I have an account!!&nbsp;
+    <span onclick="showLogin()" style="font-size:14px; color:#007bff; cursor:pointer; text-decoration:underline;">
+      Log in
+    </span>
+  </p>
 </div>
 
+
+
 <div class="container" id="loginPage">
-  <h2>Login</h2>
-  <input type="email" id="loginEmail" placeholder="Email" />
+  <div class="main-title">AdsclicksBot</div>
+  <h2>Login Now</h2>
+  <input type="email address" id="loginEmail" placeholder="Email" />
   <input type="password" id="loginPassword" placeholder="Password" />
   <button onclick="login()">Log In</button>
+
+  <div class="or-separator">OR</div>
+  <p style="text-align:center; font-size:14px; margin-top:15px;">
+    Don't have an account?&nbsp;
+    <span onclick="showRegister()" style="font-size:14px; color:#007bff; cursor:pointer; text-decoration:underline;">
+      Create
+    </span>
+  </p>
 </div>
 
 <div class="container" id="helloPage">
-  <h2>Welcome</h2>
+  <h2 style="font-size:40px; text-align:center; text-decoration:underline; color:green; font-weight:bold;">
+  Welcome
+</h2>
   <p>You are successfully logged in.</p>
   <button onclick="goToDashboard()">Go to Dashboard</button>
 </div>
@@ -267,9 +294,13 @@
     document.getElementById("loginPage").style.display = "block";
   }
 
+  function showRegister() {
+    document.getElementById("loginPage").style.display = "none";
+    document.getElementById("registerPage").style.display = "block";
+  }
+
   function goToDashboard() {
-    alert("🚀 Redirecting to dashboard...");
-    // window.location.href = "dashboard.html"; // use this when you have dashboard.html
+    window.location.href = "dashboard.html";
   }
 </script>
 </body>
